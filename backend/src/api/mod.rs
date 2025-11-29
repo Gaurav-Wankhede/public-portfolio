@@ -4,7 +4,7 @@ pub mod projects;
 
 use crate::{auth::AuthConfig, database::MongoClient};
 use axum::Router;
-use chat::GeminiClient;
+use chat::{GeminiClient, PortfolioOwner};
 use std::sync::Arc;
 
 /// Build API router with all endpoints
@@ -15,6 +15,7 @@ pub fn build_router(
     auth_config: Arc<AuthConfig>,
     gemini_client: Arc<GeminiClient>,
     api_key: String,
+    portfolio_owner: PortfolioOwner,
 ) -> Router {
     // Version 1 API routes
     let v1_router = Router::new()
@@ -28,7 +29,7 @@ pub fn build_router(
         )
         .nest(
             "/chat",
-            chat::router(db_client.clone(), gemini_client, api_key),
+            chat::router(db_client.clone(), gemini_client, api_key, portfolio_owner),
         );
 
     // Nest under /v1 prefix

@@ -15,7 +15,7 @@ mod middleware;
 mod models;
 mod repositories;
 
-use api::chat::GeminiClient;
+use api::chat::{GeminiClient, PortfolioOwner};
 use auth::{AuthConfig, LoginRequest, LoginResponse};
 
 #[shuttle_runtime::main]
@@ -64,12 +64,21 @@ async fn main(
     let gemini_client = Arc::new(GeminiClient::new(google_api_key.clone()));
     tracing::info!("Gemini client initialized");
 
+    // Load portfolio owner configuration from secrets
+    let portfolio_owner = PortfolioOwner::from_secrets(&secrets);
+    tracing::info!(
+        "Portfolio owner configured: {} ({})",
+        portfolio_owner.name,
+        portfolio_owner.title
+    );
+
     // Build API router with admin authentication
     let api_router = api::build_router(
         db_client.clone(),
         auth_config.clone(),
         gemini_client,
         google_api_key,
+        portfolio_owner,
     );
 
     // Auth routes

@@ -1,8 +1,8 @@
-use crate::{database::MongoClient, models::certificate::CertificateUpdate};
+use crate::{auth::UserInfo, database::MongoClient, models::certificate::CertificateUpdate};
 use axum::{
     extract::{Path, State},
     http::StatusCode,
-    Json,
+    Extension, Json,
 };
 use serde_json::{json, Value};
 use std::sync::Arc;
@@ -26,10 +26,15 @@ use validator::Validate;
 ))]
 pub async fn delete_certificate(
     State(db): State<Arc<MongoClient>>,
+    Extension(user): Extension<UserInfo>,
     Path(slug): Path<String>,
 ) -> Result<Json<Value>, StatusCode> {
+    tracing::info!("Admin {} deleting certificate: {}", user.email, slug);
     match db.delete_by_slug("certificates", &slug).await {
-        Ok(true) => Ok(Json(json!({"message": "Certificate deleted successfully"}))),
+        Ok(true) => {
+            tracing::info!("Certificate '{}' deleted by {}", slug, user.email);
+            Ok(Json(json!({"message": "Certificate deleted successfully"})))
+        }
         Ok(false) => Err(StatusCode::NOT_FOUND),
         Err(e) => {
             tracing::error!("Failed to delete certificate: {}", e);
@@ -58,9 +63,12 @@ pub async fn delete_certificate(
 ))]
 pub async fn update_certificate(
     State(db): State<Arc<MongoClient>>,
+    Extension(user): Extension<UserInfo>,
     Path(slug): Path<String>,
     Json(certificate): Json<CertificateUpdate>,
 ) -> Result<Json<Value>, StatusCode> {
+    tracing::info!("Admin {} updating certificate: {}", user.email, slug);
+
     // Validate input
     certificate.validate().map_err(|e| {
         tracing::warn!("Validation failed for certificate update: {}", e);
@@ -71,10 +79,13 @@ pub async fn update_certificate(
         mongodb::bson::to_document(&certificate).map_err(|_| StatusCode::BAD_REQUEST)?;
 
     match db.update_by_slug("certificates", &slug, update_doc).await {
-        Ok(true) => Ok(Json(json!({
-            "message": "Certificate updated successfully",
-            "slug": slug
-        }))),
+        Ok(true) => {
+            tracing::info!("Certificate '{}' updated by {}", slug, user.email);
+            Ok(Json(json!({
+                "message": "Certificate updated successfully",
+                "slug": slug
+            })))
+        }
         Ok(false) => Err(StatusCode::NOT_FOUND),
         Err(e) => {
             tracing::error!("Failed to update certificate: {}", e);

@@ -1,19 +1,20 @@
 use super::{
-    build_system_prompt, client::GeminiClient, format_certificates, format_projects,
-    generate_embedding, keyword_search, vector_search,
+    build_system_prompt, client::GeminiClient, config::PortfolioOwner, format_certificates,
+    format_projects, generate_embedding, keyword_search, vector_search,
 };
 use crate::{
     database::MongoClient,
-    models::{ChatRequest, ChatResponse},
+    models::{ChatMessage, ChatRequest, ChatResponse},
 };
 use axum::{extract::State, http::StatusCode, Json};
 use std::sync::Arc;
 
-/// RAG state containing both DB and Gemini clients
+/// RAG state containing DB, Gemini clients, and portfolio owner config
 pub struct RagState {
     pub db_client: Arc<MongoClient>,
     pub gemini_client: Arc<GeminiClient>,
     pub api_key: String,
+    pub portfolio_owner: PortfolioOwner,
 }
 
 /// Handle chat request with RAG (Retrieval-Augmented Generation)
@@ -91,15 +92,20 @@ pub async fn chat_handler(
     let projects_context = format_projects(projects_docs);
     let certs_context = format_certificates(certs_docs);
 
-    // Step 5: Build system prompt with context
-    let system_prompt = build_system_prompt(&projects_context, &certs_context);
+    // Step 5: Build system prompt with portfolio owner config and context
+    let system_prompt = build_system_prompt(
+        &rag_state.portfolio_owner,
+        &projects_context,
+        &certs_context,
+    );
 
-    // Step 6: Combine system prompt + user message
+    // Step 6: Build conversation with history if provided
+    let conversation_history = format_chat_history(&request.chat_history);
     let full_prompt = format!(
         "{}
-
+{}
 User Question: {}",
-        system_prompt, request.messages
+        system_prompt, conversation_history, request.messages
     );
 
     // Step 7: Generate response
@@ -122,5 +128,19 @@ async fn fallback_chat(
     match gemini_client.chat(message).await {
         Ok(content) => Ok(Json(ChatResponse { content })),
         Err(_) => Err(StatusCode::INTERNAL_SERVER_ERROR),
+    }
+}
+
+/// Format chat history into a conversation context string
+fn format_chat_history(history: &Option<Vec<ChatMessage>>) -> String {
+    match history {
+        Some(messages) if !messages.is_empty() => {
+            let formatted: Vec<String> = messages
+                .iter()
+                .map(|msg| format!("{}: {}", msg.role, msg.content))
+                .collect();
+            format!("\n## Previous Conversation:\n{}\n", formatted.join("\n"))
+        }
+        _ => String::new(),
     }
 }

@@ -5,9 +5,9 @@ use std::time::{SystemTime, UNIX_EPOCH};
 /// JWT Claims structure
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Claims {
-    pub sub: String,      // Subject (email)
-    pub exp: usize,       // Expiration time
-    pub iat: usize,       // Issued at
+    pub sub: String, // Subject (email)
+    pub exp: usize,  // Expiration time
+    pub iat: usize,  // Issued at
 }
 
 /// Authentication configuration using environment variables
@@ -31,9 +31,8 @@ impl AuthConfig {
             .expect("Failed to hash admin password");
 
         // Use provided JWT secret or generate from password
-        let jwt_secret = jwt_secret.unwrap_or_else(|| {
-            format!("portfolio-jwt-secret-{}", &admin_password)
-        });
+        let jwt_secret =
+            jwt_secret.unwrap_or_else(|| format!("portfolio-jwt-secret-{}", &admin_password));
 
         Self {
             admin_email,
@@ -149,7 +148,7 @@ pub struct LoginResponse {
     pub token_type: String,
 }
 
-/// User info extracted from token
+/// User info extracted from token and stored in request extensions
 #[derive(Debug, Clone)]
 pub struct UserInfo {
     pub email: String,

@@ -1,8 +1,8 @@
-use crate::{database::MongoClient, models::project::ProjectUpdate};
+use crate::{auth::UserInfo, database::MongoClient, models::project::ProjectUpdate};
 use axum::{
     extract::{Path, State},
     http::StatusCode,
-    Json,
+    Extension, Json,
 };
 use serde_json::{json, Value};
 use std::sync::Arc;
@@ -26,10 +26,15 @@ use validator::Validate;
 ))]
 pub async fn delete_project(
     State(db): State<Arc<MongoClient>>,
+    Extension(user): Extension<UserInfo>,
     Path(slug): Path<String>,
 ) -> Result<Json<Value>, StatusCode> {
+    tracing::info!("Admin {} deleting project: {}", user.email, slug);
     match db.delete_by_slug("projects", &slug).await {
-        Ok(true) => Ok(Json(json!({"message": "Project deleted successfully"}))),
+        Ok(true) => {
+            tracing::info!("Project '{}' deleted by {}", slug, user.email);
+            Ok(Json(json!({"message": "Project deleted successfully"})))
+        }
         Ok(false) => Err(StatusCode::NOT_FOUND),
         Err(e) => {
             tracing::error!("Failed to delete project: {}", e);
@@ -58,9 +63,12 @@ pub async fn delete_project(
 ))]
 pub async fn update_project(
     State(db): State<Arc<MongoClient>>,
+    Extension(user): Extension<UserInfo>,
     Path(slug): Path<String>,
     Json(project): Json<ProjectUpdate>,
 ) -> Result<Json<Value>, StatusCode> {
+    tracing::info!("Admin {} updating project: {}", user.email, slug);
+
     // Validate input
     project.validate().map_err(|e| {
         tracing::warn!("Validation failed for project update: {}", e);
@@ -70,10 +78,13 @@ pub async fn update_project(
     let update_doc = mongodb::bson::to_document(&project).map_err(|_| StatusCode::BAD_REQUEST)?;
 
     match db.update_by_slug("projects", &slug, update_doc).await {
-        Ok(true) => Ok(Json(json!({
-            "message": "Project updated successfully",
-            "slug": slug
-        }))),
+        Ok(true) => {
+            tracing::info!("Project '{}' updated by {}", slug, user.email);
+            Ok(Json(json!({
+                "message": "Project updated successfully",
+                "slug": slug
+            })))
+        }
         Ok(false) => Err(StatusCode::NOT_FOUND),
         Err(e) => {
             tracing::error!("Failed to update project: {}", e);
