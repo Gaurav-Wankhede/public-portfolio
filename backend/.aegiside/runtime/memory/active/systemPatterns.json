@@ -1,0 +1,59 @@
+{
+  "patterns": [
+    {
+      "name": "Generic CRUD Pattern",
+      "description": "Use generics to eliminate duplication across projects/certificates/testimonials",
+      "example": "pub async fn list<T: DeserializeOwned>(...) -> Result<Json<Vec<T>>>"
+    },
+    {
+      "name": "Repository Pattern",
+      "description": "Separate database logic from HTTP handlers for testability",
+      "structure": "src/repositories/{project,certificate,testimonial}_repository.rs"
+    },
+    {
+      "name": "Unified Error Handling",
+      "description": "Custom ApiError enum with IntoResponse implementation",
+      "benefits": [
+        "Consistent JSON errors",
+        "Better debugging",
+        "Type safety"
+      ]
+    },
+    {
+      "name": "Shuttle Secrets Management",
+      "description": "NEVER edit Secrets.toml directly - use Shuttle CLI only",
+      "commands": [
+        "shuttle secrets add KEY=value",
+        "shuttle secrets list"
+      ]
+    },
+    {
+      "name": "Axum Middleware Composition",
+      "description": "Apply middleware selectively per route group",
+      "example": "router.layer(middleware::from_fn_with_state(state, require_admin))"
+    }
+  ],
+  "antiPatterns": [
+    {
+      "name": "God Object (MongoClient)",
+      "issue": "MongoClient has both collection access AND business logic",
+      "fix": "Split into repositories with single responsibility"
+    },
+    {
+      "name": "Hardcoded Magic Numbers",
+      "issue": "Vector search limit: 3, numCandidates: 10 hardcoded",
+      "fix": "Extract to configuration constants"
+    },
+    {
+      "name": "Mixed Error Handling",
+      "issue": "Using both anyhow and StatusCode inconsistently",
+      "fix": "Use custom ApiError type everywhere"
+    }
+  ],
+  "learnings": [
+    "Secrets.toml must be in .gitignore and NEVER committed",
+    "MongoDB vector search requires explicit index configuration",
+    "Shuttle runtime handles tracing initialization automatically",
+    "Axum 0.8 requires explicit Arc wrapping for shared state"
+  ]
+}

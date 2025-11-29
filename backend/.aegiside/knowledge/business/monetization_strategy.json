@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2025-11-01T14:31:00+05:30",
+  "tiers": {
+    "free": {
+      "name": "Community",
+      "price": 0,
+      "device_limit": 1,
+      "features": ["Core MCP tools", "Local deployment", "Basic memory bank"],
+      "restrictions": ["1 device", "Community support only"]
+    },
+    "pro": {
+      "name": "Professional",
+      "price_usd": 9,
+      "price_inr": 749,
+      "device_limit": 2,
+      "features": ["All free features", "Advanced analytics", "Priority support", "Custom integrations"],
+      "target": "Individual developers"
+    },
+    "ultimate": {
+      "name": "Ultimate",
+      "price_usd": 19,
+      "price_inr": 1499,
+      "device_limit": 3,
+      "features": ["All pro features", "Team collaboration", "Enterprise support", "Custom MCP servers"],
+      "target": "Teams and organizations"
+    }
+  },
+  "authentication": {
+    "method": "OAuth 2.0 with device fingerprinting",
+    "device_activation": "Hardware-based unique ID",
+    "security": ["PKCE flow", "Device code flow", "Token rotation", "IP anomaly detection"]
+  },
+  "enforcement": {
+    "device_tracking": "SHA256(cpu_serial + mac_address + hostname + os)",
+    "subscription_validation": "Every 6 hours",
+    "grace_period": "3 days for payment failures"
+  }
+}

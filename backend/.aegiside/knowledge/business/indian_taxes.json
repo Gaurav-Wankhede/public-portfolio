@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2025-11-01T14:31:00+05:30",
+  "gst_compliance": {
+    "rate": "18% GST on SaaS in India",
+    "registration_threshold": "INR 20 lakhs annual turnover",
+    "filing": "Monthly GSTR-1 (sales), GSTR-3B (summary)",
+    "reverse_charge": "Applicable for international B2B services"
+  },
+  "income_tax": {
+    "business_structure": {
+      "proprietorship": "Simple, personal tax rates (up to 30% + surcharge)",
+      "llp": "30% flat corporate tax",
+      "private_limited": "25% if turnover < INR 400 crores"
+    },
+    "startup_benefits": {
+      "section_80iac": "100% tax exemption for 3 out of 10 years (if DPIIT recognized)",
+      "eligibility": "Turnover < INR 100 crores, incorporated after 2016"
+    }
+  },
+  "international_sales": {
+    "export_of_services": "Zero-rated (0% GST) if recipient is outside India",
+    "documentation": "Export invoice with LUT (Letter of Undertaking)",
+    "forex_compliance": "Report to RBI if exceeds USD 25,000/year"
+  },
+  "pricing_strategy": {
+    "domestic": "Price + 18% GST (e.g., INR 749 + INR 135 = INR 884 total)",
+    "international": "No GST, straight USD pricing"
+  }
+}

@@ -1,0 +1,36 @@
+import { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://gauravwankhede.com";
+
+  return {
+    rules: {
+      userAgent: "*",
+      allow: [
+        "/",
+        "/projects/",
+        "/about/",
+        "/contact/",
+        "/Ask-Gaurav/",
+        "/upsc-journey/",
+        "/testimonials/",
+        "/youtube/",
+        "/youtube/seo-optimizer/",
+        "/ai-content-generator/",
+        "/ai-content-generator/linkedin/",
+        "/ai-content-generator/twitter/",
+        "/ai-content-generator/blog/",
+        "/ai-content-generator/article/",
+      ],
+      disallow: [
+        "/api/",
+        "/private/",
+        "/_*", // Disallow Next.js internal routes
+        "/*.json$", // Block JSON files
+      ],
+    },
+    sitemap: `${baseUrl}/sitemap.xml`,
+    host: baseUrl,
+  };
+}

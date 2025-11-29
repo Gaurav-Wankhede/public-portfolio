@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2025-11-01T14:31:00+05:30",
+  "pricing_parity": {
+    "usd_to_inr_conversion": 83,
+    "parity_adjustment": "India prices ~10% lower to match purchasing power",
+    "rationale": "PPP (Purchasing Power Parity) makes software more accessible"
+  },
+  "tier_pricing": {
+    "pro": {
+      "usd": 9,
+      "inr": 749,
+      "effective_rate": "INR 83.2/USD (slightly favorable)",
+      "other_markets": {
+        "eur": 8.5,
+        "gbp": 7.5,
+        "cad": 12
+      }
+    },
+    "ultimate": {
+      "usd": 19,
+      "inr": 1499,
+      "effective_rate": "INR 78.9/USD (more favorable)",
+      "other_markets": {
+        "eur": 18,
+        "gbp": 16,
+        "cad": 25
+      }
+    }
+  },
+  "regional_strategy": {
+    "developed_markets": "Full USD pricing (US, Canada, Australia, Western Europe)",
+    "emerging_markets": "PPP-adjusted pricing (India, Southeast Asia, Latin America, Eastern Europe)",
+    "rationale": "Maximize addressable market while maintaining revenue"
+  },
+  "payment_localization": {
+    "india": "Razorpay for UPI, netbanking, wallets",
+    "global": "Stripe for cards, Apple Pay, Google Pay",
+    "china": "Alipay, WeChat Pay (future consideration)"
+  }
+}

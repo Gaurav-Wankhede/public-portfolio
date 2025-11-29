@@ -1,0 +1,8 @@
+[build]
+# Static assets configuration for Shuttle deployment
+assets = []
+
+[deploy]
+# Deployment configuration
+# deny_dirty = false allows deployment with uncommitted changes during development
+deny_dirty = false

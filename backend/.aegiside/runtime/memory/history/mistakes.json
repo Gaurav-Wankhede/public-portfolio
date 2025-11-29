@@ -1,0 +1,41 @@
+{
+  "mistakes": [
+    {
+      "mistake": "Committing Secrets.toml to version control",
+      "severity": "CRITICAL",
+      "lesson": "NEVER commit secrets files. Use Shuttle CLI exclusively.",
+      "prevention": "Add pre-commit hook to block Secrets.toml commits"
+    },
+    {
+      "mistake": "Input validation defined but not enforced",
+      "severity": "HIGH",
+      "lesson": "Validator decorators must be paired with .validate() calls in handlers",
+      "prevention": "Add integration tests that verify validation is enforced"
+    },
+    {
+      "mistake": "Code duplication across CRUD handlers",
+      "severity": "MEDIUM",
+      "lesson": "Extract common patterns early before duplication spreads",
+      "prevention": "Use generics and traits for reusable patterns"
+    },
+    {
+      "mistake": "No testing from the start",
+      "severity": "HIGH",
+      "lesson": "Writing tests later is much harder than writing them alongside code",
+      "prevention": "TDD or at minimum write tests before refactoring"
+    },
+    {
+      "mistake": "Mixing error handling approaches",
+      "severity": "MEDIUM",
+      "lesson": "Choose one error handling strategy and use it consistently",
+      "prevention": "Define custom error types early in the project"
+    }
+  ],
+  "technicalDebtIncurred": [
+    "300+ lines of duplicated CRUD code",
+    "Zero test coverage",
+    "No repository pattern (business logic in handlers)",
+    "Hardcoded configuration values",
+    "Missing API versioning"
+  ]
+}

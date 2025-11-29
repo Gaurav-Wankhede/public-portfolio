@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend Connectivity Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; }
+        pre { background: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Backend Connectivity Test</h1>
+    
+    <button onclick="testBackendDirect()">Test Backend Direct</button>
+    <button onclick="testFrontendAPI()">Test Frontend API</button>
+    <button onclick="testWithAuth()">Test With Auth</button>
+    <button onclick="clearResults()">Clear Results</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const backendUrl = 'http://127.0.0.1:8000';
+        const frontendApiUrl = '/api/upsc';
+        
+        function addResult(title, content, isError = false) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test ${isError ? 'error' : 'success'}`;
+            div.innerHTML = `<h3>${title}</h3><pre>${content}</pre>`;
+            results.appendChild(div);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+        
+        async function testBackendDirect() {
+            try {
+                addResult('Testing Backend Direct', 'Connecting to ' + backendUrl + '/docs...');
+                
+                const response = await fetch(backendUrl + '/docs');
+                const text = await response.text();
+                
+                addResult('Backend Direct Result', 
+                    `Status: ${response.status}\n` +
+                    `Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2)}\n` +
+                    `Body: ${text.substring(0, 200)}...`
+                );
+            } catch (error) {
+                addResult('Backend Direct Error', error.message, true);
+            }
+        }
+        
+        async function testFrontendAPI() {
+            try {
+                addResult('Testing Frontend API', 'Connecting to ' + frontendApiUrl + '/evaluate...');
+                
+                const formData = new FormData();
+                formData.append('paper_type', 'gs1');
+                
+                const response = await fetch(frontendApiUrl + '/evaluate', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': 'Bearer test-token'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                addResult('Frontend API Result', 
+                    `Status: ${response.status}\n` +
+                    `Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2)}\n` +
+                    `Body: ${JSON.stringify(data, null, 2)}`
+                );
+            } catch (error) {
+                addResult('Frontend API Error', error.message, true);
+            }
+        }
+        
+        async function testWithAuth() {
+            try {
+                // Get token from localStorage if available
+                const token = localStorage.getItem('upsc_token') || 'test-token';
+                
+                addResult('Testing With Auth', `Using token: ${token.substring(0, 20)}...`);
+                
+                const formData = new FormData();
+                formData.append('paper_type', 'gs1');
+                
+                const response = await fetch(frontendApiUrl + '/evaluate', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                addResult('Auth Test Result', 
+                    `Status: ${response.status}\n` +
+                    `Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()), null, 2)}\n` +
+                    `Body: ${JSON.stringify(data, null, 2)}`
+                );
+            } catch (error) {
+                addResult('Auth Test Error', error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

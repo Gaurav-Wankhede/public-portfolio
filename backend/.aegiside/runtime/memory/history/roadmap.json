@@ -1,0 +1,106 @@
+{
+  "roadmap": [
+    {
+      "phase": "Phase 1 - Security",
+      "priority": "CRITICAL",
+      "tasks": [
+        {
+          "name": "Rotate all exposed credentials",
+          "status": "USER_ACTION_REQUIRED"
+        },
+        {
+          "name": "Fix OAuth token validation",
+          "status": "PENDING"
+        },
+        {
+          "name": "Enforce input validation",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "phase": "Phase 2 - Architecture",
+      "priority": "HIGH",
+      "tasks": [
+        {
+          "name": "Create unified error handling layer",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Implement repository pattern",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Eliminate code duplication",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Add CORS, rate limiting, caching",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Add pagination and API versioning",
+          "status": "PLANNED"
+        }
+      ]
+    },
+    {
+      "phase": "Phase 3 - Testing",
+      "priority": "HIGH",
+      "tasks": [
+        {
+          "name": "Unit tests",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Integration tests",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Handler tests",
+          "status": "PLANNED"
+        }
+      ]
+    },
+    {
+      "phase": "Phase 4 - Observability",
+      "priority": "MEDIUM",
+      "tasks": [
+        {
+          "name": "Add Prometheus metrics",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Structured logging",
+          "status": "PLANNED"
+        },
+        {
+          "name": "Request ID tracking",
+          "status": "PLANNED"
+        }
+      ]
+    }
+  ],
+  "milestones": [
+    {
+      "name": "Security hardened",
+      "target": "Week 1",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "name": "Architecture refactored",
+      "target": "Week 2-3",
+      "status": "NOT_STARTED"
+    },
+    {
+      "name": "Testing implemented",
+      "target": "Week 3-4",
+      "status": "NOT_STARTED"
+    },
+    {
+      "name": "Production ready",
+      "target": "Week 4",
+      "status": "NOT_STARTED"
+    }
+  ]
+}

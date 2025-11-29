@@ -1,0 +1,14 @@
+target/
+.git/
+.gitignore
+.env
+.env.*
+!.env.example
+*.md
+!README.md
+.aegiside/
+.windsurf/
+docs/MIGRATION_OVERVIEW.md
+Secrets.toml.example
+mcp_servers.json
+swagger-dark-ui.html

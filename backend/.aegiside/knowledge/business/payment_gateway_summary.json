@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2025-11-01T14:31:00+05:30",
+  "primary_gateway": {
+    "name": "Stripe",
+    "why": "Industry standard, excellent documentation, supports both USD and INR",
+    "features": ["Subscription billing", "Payment links", "Webhooks", "Tax automation", "Fraud detection"],
+    "pricing": "2.9% + $0.30 per transaction (US), 2.9% + INR 2 (India)"
+  },
+  "india_specific": {
+    "name": "Razorpay",
+    "why": "Best for Indian market, supports UPI, local payment methods",
+    "features": ["UPI autopay", "Netbanking", "Wallets", "International cards", "Subscriptions"],
+    "pricing": "2% domestic, 3% + INR 2 international"
+  },
+  "backup_options": {
+    "paypal": "Global coverage, buyer protection",
+    "paddle": "Merchant of record (handles taxes)",
+    "lemonsqueezy": "Developer-friendly, no entity required"
+  },
+  "implementation_priority": {
+    "phase_1": "Stripe (USD subscriptions)",
+    "phase_2": "Razorpay (INR market)",
+    "phase_3": "Payment links for flexibility"
+  }
+}

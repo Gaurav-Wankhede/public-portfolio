@@ -1,0 +1,64 @@
+{
+  "projectType": "rust-backend",
+  "framework": "Axum 0.8",
+  "deployment": "Shuttle.rs",
+  "database": "MongoDB Atlas",
+  "ai": "Google Gemini",
+  "architecture": {
+    "pattern": "Modular layered architecture",
+    "layers": [
+      "API (handlers with validation)",
+      "Database (MongoClient)",
+      "Models (with Validate derives)",
+      "Auth (Google OAuth)"
+    ],
+    "needsImprovement": [
+      "Repository pattern (src/repositories/)",
+      "Service layer abstraction",
+      "Unified error handling (src/error.rs)",
+      "Generic CRUD to reduce duplication"
+    ]
+  },
+  "criticalIssues": [
+    {
+      "issue": "Secrets exposed in Secrets.toml",
+      "severity": "CRITICAL",
+      "status": "Documented in SECURITY_ROTATION_GUIDE.md - User action required"
+    },
+    {
+      "issue": "Input validation not enforced",
+      "severity": "HIGH",
+      "status": "RESOLVED - Phase 1 complete (all 6 POST/PUT endpoints validated)"
+    },
+    {
+      "issue": "OAuth serde imports missing",
+      "severity": "MEDIUM",
+      "status": "RESOLVED - Fixed in src/auth/google.rs"
+    }
+  ],
+  "technicalDebt": {
+    "codeDuplication": "~300 lines across projects/certificates/testimonials handlers (generic CRUD needed)",
+    "missingTests": "Zero test coverage (Phase 4 planned)",
+    "missingFeatures": [
+      "Rate limiting (tower-governor)",
+      "Response caching (moka or redis)",
+      "Pagination for list endpoints",
+      "API versioning (/api/v1)",
+      "CORS configuration for Cloudflare"
+    ]
+  },
+  "completedWork": {
+    "phase0": "ServeUPSC extraction - 283 files backed up, 200+ removed from portfolio",
+    "phase1": "Security - Input validation enforced on all create/update handlers",
+    "fixes": [
+      "Added validator::Validate imports to 6 handler files",
+      "Added .validate() calls before database operations",
+      "Fixed missing serde imports in GoogleUserInfo struct",
+      "Backend compiles successfully with input validation"
+    ]
+  },
+  "buildStatus": {
+    "backend": "✅ Compiling (3 warnings about unused structs)",
+    "frontend": "✅ Building successfully (Next.js 15.5.3, 18 static + 15 dynamic routes)"
+  }
+}
