@@ -376,48 +376,16 @@ curl -X POST https://your-project-name.shuttle.app/auth/login \
 
 ---
 
-## Video Tutorials
+## Deployment Guide
 
-Learn how to deploy your portfolio with these step-by-step video guides:
+For a detailed step-by-step deployment walkthrough, see **[DEPLOY.md](./DEPLOY.md)**.
 
-### Frontend Deployment
-
-| Platform | Tutorial |
-|----------|----------|
-| **Vercel** | [Deploy Next.js to Vercel](https://www.youtube.com/watch?v=2HBIzEx6IZA) |
-| **Cloudflare Pages** | [Deploy to Cloudflare Pages](https://www.youtube.com/watch?v=MTc2CTYoszY) |
-| **Netlify** | [Deploy Next.js to Netlify](https://www.youtube.com/watch?v=yE_y4EBq9wA) |
-| **AWS Amplify** | [Deploy to AWS Amplify](https://www.youtube.com/watch?v=DHLZAzdT44Y) |
-
-### Backend Deployment
-
-| Platform | Tutorial |
-|----------|----------|
-| **Shuttle.rs** | [Deploy Rust to Shuttle](https://www.youtube.com/watch?v=FTJvRK9gzXE) |
-| **Railway** | [Deploy Backend to Railway](https://www.youtube.com/watch?v=HwCX5JFT_N8) |
-| **Render** | [Deploy to Render](https://www.youtube.com/watch?v=bnCOyGaSe84) |
-| **Fly.io** | [Deploy to Fly.io](https://www.youtube.com/watch?v=J7Fm7MdZn_E) |
-
-### Database Setup
-
-| Service | Tutorial |
-|----------|----------|
-| **MongoDB Atlas** | [MongoDB Atlas Setup Guide](https://www.youtube.com/watch?v=084rmLU1UgA) |
-| **Supabase** | [Supabase Database Setup](https://www.youtube.com/watch?v=dU7GwCOgvNY) |
-
-### Domain & SSL
-
-| Topic | Tutorial |
-|----------|----------|
-| **Custom Domain** | [Add Custom Domain to Vercel](https://www.youtube.com/watch?v=K3JZycEBhQg) |
-| **Cloudflare DNS** | [Cloudflare DNS Setup](https://www.youtube.com/watch?v=XQKkb84EjNQ) |
-
-### Full Stack Deployment Guides
-
-| Guide | Tutorial |
-|----------|----------|
-| **Complete Next.js Deployment** | [Production Deployment Guide](https://www.youtube.com/watch?v=OgDuT_sLOKY) |
-| **CI/CD with GitHub Actions** | [Automate Deployments](https://www.youtube.com/watch?v=R8_veQiYBjI) |
+The guide covers:
+- Pushing your code to GitHub
+- Deploying frontend to Cloudflare Pages
+- Deploying backend to Shuttle.rs
+- Connecting everything together
+- Troubleshooting common issues
 
 ---
 
