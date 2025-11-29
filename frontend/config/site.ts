@@ -63,7 +63,7 @@ export const siteConfig = {
   // Footer Configuration
   footerTagline:
     process.env.NEXT_PUBLIC_FOOTER_TAGLINE || "Building the future with code",
-  copyrightStartYear: process.env.NEXT_PUBLIC_COPYRIGHT_START_YEAR || "2024",
+  copyrightStartYear: process.env.NEXT_PUBLIC_COPYRIGHT_START_YEAR || "2025",
 
   // Navigation Links (routes that should appear in navbar)
   navLinks: [

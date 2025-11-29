@@ -148,7 +148,11 @@ const Footer = () => {
         <div className="mt-6 sm:mt-8 text-center">
           <div className="h-px w-full bg-border my-4" />
           <p className="text-sm">
-            &copy; {siteConfig.copyrightStartYear} - {new Date().getFullYear()}{" "}
+            &copy;{" "}
+            {siteConfig.copyrightStartYear ===
+            new Date().getFullYear().toString()
+              ? new Date().getFullYear()
+              : `${siteConfig.copyrightStartYear} - ${new Date().getFullYear()}`}{" "}
             <Link
               href="/"
               className="text-[var(--color-primary)] hover:underline"

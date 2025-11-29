@@ -141,10 +141,11 @@ const Navbar = () => {
                   href="https://github.com/Gaurav-Wankhede/public-portfolio"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-2 sm:ml-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity"
+                  className="ml-2 sm:ml-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-purple-500 text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity group"
+                  title="Star this repo on GitHub"
                 >
                   <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  <span className="hidden sm:inline">Star</span>
+                  <span className="hidden sm:inline">Star on GitHub</span>
                 </Link>
                 <Button
                   variant="ghost"
