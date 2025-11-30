@@ -185,7 +185,7 @@ NEXT_PUBLIC_OWNER_NAME="Your Name"
 NEXT_PUBLIC_OWNER_FIRST_NAME="YourFirstName"
 NEXT_PUBLIC_SITE_NAME="Your Portfolio"
 NEXT_PUBLIC_SITE_DESCRIPTION="Your portfolio description"
-NEXT_PUBLIC_SITE_URL="https://your-portfolio-domain.com"
+NEXT_PUBLIC_SITE_URL="https://your-portfolio.pages.dev"
 
 # Contact
 NEXT_PUBLIC_CONTACT_EMAIL="hello@yourdomain.com"
@@ -202,23 +202,37 @@ pnpm install
 pnpm build
 ```
 
-### Step 3: Deploy
+### Step 3: Deploy to Cloudflare Pages (Recommended)
 
-**Vercel (Recommended)**
-```bash
-npx vercel
-```
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Click **"Workers & Pages"** in left sidebar
+3. Click **"Create application"** → Select **"Pages"** tab
+4. Click **"Connect to Git"** → Authorize GitHub
+5. Select your `public-portfolio` repository
+6. Configure build settings:
 
-**Cloudflare Pages**
+| Setting | Value |
+|---------|-------|
+| Project name | `my-portfolio-frontend` |
+| Production branch | `main` |
+| Framework preset | `Next.js` |
+| Build command | `cd frontend && pnpm install && pnpm build` |
+| Build output directory | `frontend/.next` |
+
+7. Add environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `NODE_VERSION` | `18` |
+| `BACKEND_URL` | `https://your-project-name.shuttle.app` |
+
+8. Click **"Save and Deploy"**
+9. Your site will be available at: `https://my-portfolio-frontend.pages.dev`
+
+**Alternative: Netlify**
 1. Connect your Git repository
-2. Build command: `pnpm build`
-3. Output directory: `.next`
-4. Add environment variables
-
-**Netlify**
-1. Connect your Git repository
-2. Build command: `pnpm build`
-3. Publish directory: `.next`
+2. Build command: `cd frontend && pnpm install && pnpm build`
+3. Publish directory: `frontend/.next`
 
 ---
 
@@ -231,8 +245,8 @@ Create `dashboard/.env.local`:
 BACKEND_URL="https://your-project-name.shuttle.app"
 
 # Site URLs (for CORS)
-NEXT_PUBLIC_SITE_URL="https://your-portfolio.com"
-NEXT_PUBLIC_DASHBOARD_URL="https://your-dashboard.com"
+NEXT_PUBLIC_SITE_URL="https://your-portfolio.pages.dev"
+NEXT_PUBLIC_DASHBOARD_URL="https://your-dashboard.pages.dev"
 ```
 
 ### Step 2: Build
@@ -242,8 +256,31 @@ pnpm install
 pnpm build
 ```
 
-### Step 3: Deploy
-Deploy to Vercel, Cloudflare Pages, or your preferred platform.
+### Step 3: Deploy to Cloudflare Pages (Recommended)
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Click **"Workers & Pages"** in left sidebar
+3. Click **"Create application"** → Select **"Pages"** tab
+4. Click **"Connect to Git"** → Select the **same repository** (`public-portfolio`)
+5. Configure build settings:
+
+| Setting | Value |
+|---------|-------|
+| Project name | `my-portfolio-dashboard` |
+| Production branch | `main` |
+| Framework preset | `Next.js` |
+| Build command | `cd dashboard && pnpm install && pnpm build` |
+| Build output directory | `dashboard/.next` |
+
+6. Add environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `NODE_VERSION` | `18` |
+| `BACKEND_URL` | `https://your-project-name.shuttle.app` |
+
+7. Click **"Save and Deploy"**
+8. Your dashboard will be available at: `https://my-portfolio-dashboard.pages.dev`
 
 ### Step 4: Login to Dashboard
 1. Visit your dashboard URL
@@ -365,14 +402,14 @@ curl -X POST https://your-project-name.shuttle.app/auth/login \
 | BACKEND_URL | No | Backend API URL (uses fallback if empty) |
 | NEXT_PUBLIC_OWNER_NAME | Yes | Your name displayed on site |
 | NEXT_PUBLIC_SITE_NAME | Yes | Portfolio title |
-| NEXT_PUBLIC_SITE_URL | No | Your site URL |
+| NEXT_PUBLIC_SITE_URL | No | Your Cloudflare Pages URL (e.g., `https://your-portfolio.pages.dev`) |
 
 ### Dashboard (.env.local)
 | Variable | Required | Description |
 |----------|----------|-------------|
 | BACKEND_URL | Yes | Backend API URL |
-| NEXT_PUBLIC_SITE_URL | No | Main site URL |
-| NEXT_PUBLIC_DASHBOARD_URL | No | Dashboard URL |
+| NEXT_PUBLIC_SITE_URL | No | Main site Cloudflare Pages URL |
+| NEXT_PUBLIC_DASHBOARD_URL | No | Dashboard Cloudflare Pages URL |
 
 ---
 
@@ -382,9 +419,11 @@ For a detailed step-by-step deployment walkthrough, see **[DEPLOY.md](./DEPLOY.m
 
 The guide covers:
 - Pushing your code to GitHub
-- Deploying frontend to Cloudflare Pages
-- Deploying backend to Shuttle.rs
+- Deploying Frontend to **Cloudflare Pages**
+- Deploying Dashboard to **Cloudflare Pages**
+- Deploying Backend to Shuttle.rs
 - Connecting everything together
+- Custom domain setup
 - Troubleshooting common issues
 
 ---
